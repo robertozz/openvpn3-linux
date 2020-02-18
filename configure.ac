@@ -259,8 +259,18 @@ AC_ARG_VAR([ASIO_SOURCEDIR], [Alternative ASIO library directory])
 if test -z "${ASIO_SOURCEDIR}"; then
     ASIO_SOURCEDIR="${srcdir}/vendor/asio"
 fi
+
+dnl Find the proper ASIO path to use for the include files
+AC_CHECK_FILE([${ASIO_SOURCEDIR}/asio/include/asio.hpp],
+              [ASIO_CXXFLAGS="-I${ASIO_SOURCEDIR}/asio/include"],
+              [AC_CHECK_FILE([${ASIO_SOURCEDIR}/asio.hpp],
+                             [ASIO_CXXFLAGS="-I${ASIO_SOURCEDIR}"],
+                             AC_MSG_ERROR([Could not locate ASIO header file (asio.hpp)])
+                             )
+              ])
+
 AC_MSG_NOTICE([Using ASIO source directory: ${ASIO_SOURCEDIR}])
-ASIO_CXXFLAGS="-I${ASIO_SOURCEDIR}/asio/include -DUSE_ASIO -DASIO_STANDALONE -DASIO_NO_DEPRECATED"
+ASIO_CXXFLAGS="${ASIO_CXXFLAGS} -DUSE_ASIO -DASIO_STANDALONE -DASIO_NO_DEPRECATED"
 AC_SUBST([ASIO_CXXFLAGS])
 
 

@@ -389,7 +389,7 @@ Attribute: user-auth:username
 """""""""""""""""""""""""""""
 String containing the username to authenticate as.
 
-Attribute: user-auth:username
+Attribute: user-auth:password
 """""""""""""""""""""""""""""
 String containing the password used for the authentication.
 
